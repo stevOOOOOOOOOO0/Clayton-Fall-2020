@@ -1,0 +1,46 @@
+{
+string $myArray[] = {};
+string $tempArray[] = {};
+
+$tempArray = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 0 -name Ball`;
+$myArray[size($myArray)] = $tempArray[0];
+$tempArray = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 0 -name Brandon`;
+$myArray[size($myArray)] = $tempArray[0];
+$tempArray = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 0 -name Tyrell`;
+$myArray[size($myArray)] = $tempArray[0];
+$tempArray = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 0 -name YoMama`;
+$myArray[size($myArray)] = $tempArray[0];
+$tempArray = `polySphere -r 1 -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 0 -name PAPA`;
+$myArray[size($myArray)] = $tempArray[0];
+
+select -r Ball.f[180:359] Ball.f[380:399] ;
+polyExtrudeFacet -constructionHistory 0 -keepFacesTogether 1 -pvx -1.192092896e-07 -pvy 0.5 -pvz -1.788139343e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0.1 -smoothingAngle 30 Ball.f[180:359] Ball.f[380:399];
+scale -r -p -1.19209e-07cm 0.55413cm -1.78814e-07cm 1.1293 1 1.1293 ;
+
+select -r Brandon;
+move 0.273 0 0.832;
+setAttr "Brandon.scaleZ" .28;
+setAttr "Brandon.scaleX" .28;
+setAttr "Brandon.scaleY" .28;
+
+select -r Tyrell;
+move -0.273 0 0.832;
+setAttr "Tyrell.scaleZ" .28;
+setAttr "Tyrell.scaleX" .28;
+setAttr "Tyrell.scaleY" .28;
+
+select -r YoMama;
+setAttr "YoMama.translateY" -0.493;
+setAttr "YoMama.translateZ" 0.611;
+setAttr "YoMama.rotateX" 29.184;
+setAttr "YoMama.scaleX" 0.474;
+setAttr "YoMama.scaleY" 0.325;
+setAttr "YoMama.scaleZ" 0.301;
+
+polyUnite -name Geo $myArray;
+group - empty -name "Geometry";
+parent Geo Geometry;
+rename "Geometry" "Face";
+
+print $myArray;
+}
