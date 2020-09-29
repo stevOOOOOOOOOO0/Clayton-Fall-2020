@@ -1,0 +1,198 @@
+proc float Calculator(float $Numbers[], string $operation)
+{
+	switch ($operation)
+	{
+		case "Addition":
+		print($Numbers[0]);
+		for ($i = 1; $i < size($Numbers); $i++)
+		{
+			print(" + " + $Numbers[$i]);
+		}
+		print(" = " + Addition($Numbers) + "\n");
+		return Addition($Numbers);
+		break;
+		case "Subtraction":
+		print($Numbers[0]);
+		for ($i = 1; $i < size($Numbers); $i++)
+		{
+			print(" - " + $Numbers[$i]);
+		}
+		print(" = " + Subtraction($Numbers) + "\n");
+		return Subtraction($Numbers);
+		break;
+		case "Multiplication":
+		print($Numbers[0]);
+		for ($i = 1; $i < size($Numbers); $i++)
+		{
+			print(" * " + $Numbers[$i]);
+		}
+		print(" = " + Multiplication($Numbers) + "\n");
+		return Multiplication($Numbers);
+		break;
+		case "Division":
+		print($Numbers[0]);
+		for ($i = 1; $i < size($Numbers); $i++)
+		{
+			print(" / " + $Numbers[$i]);
+		}
+		print(" = " + Division($Numbers) + "\n");
+		return Division($Numbers);
+		break;
+		case "Power":
+		print($Numbers[0] + "^" + $Numbers[1] + " = " + Power($Numbers) + "\n");
+		return Power($Numbers);
+		break;
+		case "Mean":
+		print("The Mean of: {");
+		for ($i = 0; $i < (size($Numbers) - 1); $i++)
+		{
+			print($Numbers[$i] + ", ");
+		}
+		print($Numbers[size($Numbers) - 1]);
+		print("} is " + Mean($Numbers) + "\n");
+		return Mean($Numbers);
+		break;
+		case "Median":
+		print("The Median of: {");
+		for ($i = 0; $i < (size($Numbers) - 1); $i++)
+		{
+			print($Numbers[$i] + ", ");
+		}
+		print($Numbers[size($Numbers) - 1]);
+		print("} is " + Median($Numbers) + "\n");
+		return Median($Numbers);
+		break;
+		case "Mode":
+		print("The Mode of: {");
+		for ($i = 0; $i < (size($Numbers) - 1); $i++)
+		{
+			print($Numbers[$i] + ", ");
+		}
+		print($Numbers[size($Numbers) - 1]);
+		print("} is " + Mode($Numbers) + "\n");
+		return Mode($Numbers);
+		break;
+	}
+	return 0;
+}
+
+proc float Addition(float $Numbers[])
+ {
+	float $Answer = 0;
+	for($i = 0; $i < size($Numbers); $i++)
+	{
+		$Answer += $Numbers[$i];
+	}
+	return $Answer;
+ }
+ 
+ proc float Subtraction(float $Numbers[])
+ {
+	float $Answer = 0;
+	for($i = 0; $i < size($Numbers); $i++)
+	{
+		$Answer -= $Numbers[$i];
+	}
+	return $Answer;
+ }
+ 
+ proc float Multiplication(float $Numbers[])
+ {
+	float $Answer = 1;
+	for($i = 0; $i < size($Numbers); $i++)
+	{
+		$Answer *= $Numbers[$i];
+	}
+	return $Answer;
+ }
+ 
+ proc float Division(float $Numbers[])
+ {
+	float $Answer = $Numbers[0];
+	for($i = 1; $i < size($Numbers); $i++)
+	{
+		$Answer /= $Numbers[$i];
+	}
+	return $Answer;
+ }
+ 
+ proc float Power(float $Numbers[])
+ {
+	float $n = $Numbers[0];
+	float $x = $Numbers[1];
+	float $Answer = $x;
+	for($i = 1; $i < $n; $i++)
+	{
+		$Answer *= $x;
+	}
+	return $Answer;
+ }
+ 
+ proc float Mean(float $Numbers[])
+ {
+	float $Answer = 0;
+	for($i = 0; $i < size($Numbers); $i++)
+	{
+		$Answer += $Numbers[$i];
+	}
+	$Answer /= size($Numbers);
+	return $Answer;
+ }
+
+  proc float Median(float $Numbers[])
+ {
+	float $LowestNum = $Numbers[0];
+	float $ReturnNumber = 0;
+	float $NewNumbers[];
+	
+	$NewNumbers = sort($Numbers);
+	if (size($NewNumbers) % 2 == 1) // this is if the number of elements is odd
+	{
+		return $NewNumbers[size($NewNumbers)/2];
+	}
+	else
+	{
+	    float $index = size($NewNumbers);
+	    $index /= 2;
+	    $ReturnNumber = $NewNumbers[int($index)];
+	    $index -=1;
+	    $ReturnNumber += $NewNumbers[int($index)];
+	    $ReturnNumber /= 2;
+	    return $ReturnNumber;
+	}
+ }
+ 
+ proc float Mode(float $Numbers[])
+ {
+	float $Most = 0;
+	float $HowManyMost = 0;
+	float $TempHowManyMost = 0;
+	
+	for($i = 0; $i < size($Numbers); $i++)
+	{
+	   $TempHowManyMost = 0;
+		for($j = 0; $j < size($Numbers); $j++)
+		{
+			if ($Numbers[$j] == $Numbers[$i])
+			{
+				$TempHowManyMost++;
+			}
+			if ($TempHowManyMost > $HowManyMost)
+			{
+				$HowManyMost = $TempHowManyMost;
+				$Most = $Numbers[$j];
+			}
+		}
+	}
+	return $Most;
+ }
+ 
+ 
+Calculator({1,2,3,5,7,8,10}, "Addition");
+Calculator({1,2,3,5,7,8,10}, "Subtraction");
+Calculator({1,2,3,5,7,8,10}, "Multiplication");
+Calculator({1,2,3,5,7,8,10}, "Division");
+Calculator({1,8}, "Power");
+Calculator({1,2,3,5,7,8,10}, "Mean");
+Calculator({1,2,3,5,7,8,10}, "Median");
+Calculator({1,2,3,5,7,8,10}, "Mode");
