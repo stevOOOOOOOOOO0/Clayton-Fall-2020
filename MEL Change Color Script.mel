@@ -1,0 +1,14 @@
+string $curves[] = `ls -sl`;
+
+for($i = 0; $i < size($curves); $i++)
+	{
+       string $shapes[] = `listRelatives -s $curves[$i]`;
+       
+       for($j = 0; $j < size($shapes); $j++)
+       {
+           setAttr($shapes[$j] + ".overrideEnabled", true);
+		   
+		   setAttr($shapes[$j] + ".overrideColor", 3);
+		   
+       }
+	}
