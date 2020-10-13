@@ -1,0 +1,24 @@
+proc PlacementGen(float $Duplicates, float $Xmin, float $Xmax, float $Ymin, float $Ymax, float $Zmin, float $Zmax)
+{
+    string $shapes[] = `ls -sl`;
+    string $obj[];
+    float $NewX, $NewY, $NewZ;
+    
+    for($j = 0; $j < size($shapes); $j++)
+    {
+        for($i = 0; $i < $Duplicates; $i++)
+        {
+            $obj = duplicate($shapes[$j]);
+            
+            print $obj;
+            
+            $NewX = rand($Xmin, $Xmax);
+            $NewY = rand($Ymin, $Ymax);
+            $NewZ = rand($Zmin, $Zmax);
+            
+            //xform -ws -t $NewX $NewY $NewZ $obj[$i];
+        }
+    }
+}
+
+PlacementGen(3, 0, 5, -5, 0, -2.5, 2.5);
