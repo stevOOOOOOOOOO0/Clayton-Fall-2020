@@ -1,0 +1,13 @@
+import maya.cmds as cmds
+import random
+
+
+def randomize(duplicates, Xmin, Xmax, Ymin, Ymax, Zmin, Zmax):
+    Items=[]
+    Items = cmds.ls(selection=True)
+    for i in range(len(Items)):
+        for j in range(duplicates):
+            cmds.xform(cmds.duplicate(Items[i]), translation=[random.uniform(Xmin, Xmax), random.uniform(Ymin, Ymax), random.uniform(Zmin, Zmax)])
+
+
+randomize(3, 0, 10, 0, 10, 0, 10)
