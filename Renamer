@@ -1,0 +1,25 @@
+import maya.cmds as cmds
+
+
+def randomize(newName):
+    Items = cmds.ls(selection=True, an=True)
+    count = newName.count('#')
+    listNumber = 0;
+    numTemp=''
+    nameTemp = ''
+    par = newName.partition('#' * count)
+    if par[1]:
+        for i in Items:
+            nameTemp = ''
+            numTemp = ''
+            for j in range(count - len(str(listNumber))):
+                numTemp += '0'
+            numTemp += str(listNumber)
+            print(par[0] + numTemp + par[2])
+            nameTemp = par[0] + numTemp + par[2]
+            cmds.rename(Items[listNumber], nameTemp)
+            listNumber += 1
+    else:
+        cmds.error("New name is not compatible")
+
+randomize("Leg_##_Obj")
