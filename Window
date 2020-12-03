@@ -1,0 +1,71 @@
+import maya.cmds as cmds
+import random
+
+class WindowRandomizer:
+    def __init__(self):
+        self.my_window = 'StephenMichieWindow'
+
+    def create(self):
+        self.delete()
+        self.my_window = cmds.window(self.my_window, title='window to win all dows', widthHeight=(200,400))
+        self.col_layout = cmds.columnLayout(parent=self.my_window, adjustableColumn=True, columnOffset=['both', 20])
+        cmds.text(parent=self.col_layout, label='Number of Duplicates')
+        self.duplicates = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='X Minimum')
+        self.Xmin = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='X Maximum')
+        self.Xmax = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='Y Minimum')
+        self.Ymin = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='Y Maximum')
+        self.Ymax = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='Z Minimum')
+        self.Zmin = cmds.intField(parent=self.col_layout)
+        cmds.text(parent=self.col_layout, label='Z Maximum')
+        self.Zmax = cmds.intField(parent=self.col_layout)
+
+        cmds.separator(parent=self.col_layout, height=20)
+        cmds.button(parent=self.col_layout, label='Randomize!', c=lambda *x: self.randomize())
+        cmds.separator(parent=self.col_layout, height=40)
+
+        cmds.text(parent=self.col_layout, label='New Name')
+        self.newName = cmds.textField(parent=self.col_layout)
+
+        cmds.separator(parent=self.col_layout, height=20)
+        cmds.button(parent=self.col_layout, label='Rename!', c=lambda *x: self.renamer())
+
+        cmds.showWindow(self.my_window)
+
+    def delete(self):
+        if cmds.window(self.my_window, exists=True):
+            cmds.deleteUI(self.my_window)
+
+    def randomize(self):
+        Items = []
+        Items = cmds.ls(selection=True)
+        for i in range(len(Items)):
+            for j in range(cmds.intField(self.duplicates, q=True, value=True)):
+                cmds.xform(cmds.duplicate(Items[i]),
+                    translation=[random.uniform(cmds.intField(self.Xmin, q=True, value=True), cmds.intField(self.Xmax, q=True, value=True)), random.uniform(cmds.intField(self.Ymin, q=True, value=True), cmds.intField(self.Ymax, q=True, value=True)), random.uniform(cmds.intField(self.Zmin, q=True, value=True), cmds.intField(self.Zmax, q=True, value=True))])
+
+    def renamer(self):
+        Items = cmds.ls(selection=True, an=True)
+        tempName = cmds.textField(self.newName, q=True, text=True)
+        count = tempName.count('#')
+        listNumber = 0
+        numTemp = ''
+        nameTemp = ''
+        par = tempName.partition("#" * count)
+        if par[1]:
+            for i in Items:
+                nameTemp = ''
+                numTemp = ''
+                for j in range(count - len(str(listNumber))):
+                    numTemp += '0'
+                numTemp += str(listNumber)
+                print(par[0] + numTemp + par[2])
+                nameTemp = par[0] + numTemp + par[2]
+                cmds.rename(Items[listNumber], nameTemp)
+                listNumber += 1
+        else:
+            cmds.error("New name is not compatible")
