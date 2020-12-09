@@ -1,0 +1,34 @@
+import maya.cmds as cmds
+
+
+class Toolbox_UI():
+    def __init__(self):
+        self.my_window = 'sm_myTools_ui'
+
+
+    def create(self):
+        self.delete()
+
+        self.my_window = cmds.window(self.my_window, title='smToolbox', widthHeight=(200, 200))
+
+        self.col_layout = cmds.columnLayout(parent=self.my_window, adjustableColumn=True)
+
+        cmds.button(parent=self.col_layout, label='Renamer UI', c=lambda *x: self.call_renamerUI())
+
+        cmds.showWindow(self.my_window)
+
+
+    def delete(self):
+        if cmds.window(self.my_window, exists=True):
+            cmds.deleteUI(self.my_window)
+
+
+    def call_renamerUI(self):
+        import Window
+        reload(Window)
+        instance = Window.WindowRandomizer()
+        instance.create()
+
+
+cheese = Toolbox_UI()
+cheese.create()
