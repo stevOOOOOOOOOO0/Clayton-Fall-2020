@@ -1,0 +1,20 @@
+import maya.cmds as cmds
+
+class ParentScale:
+
+    def EveryOther(self):
+        Items = cmds.ls(selection=True)
+        if (len(Items) % 2 == 1):
+            cmds.error("Uneven Selection")
+        for i in range(0, len(Items), 2):
+            cmds.parentConstraint(Items[i], Items[i + 1], mo=True)
+            cmds.scaleConstraint(Items[i], Items[i + 1], mo=True)
+
+    def SetBySet(self):
+        Items = cmds.ls(selection=True)
+        if (len(Items) % 2 == 1):
+            cmds.error("Uneven Selection")
+        Half = len(Items) / 2
+        for i in range(0, Half, 1):
+            cmds.parentConstraint(Items[i], Items[i + Half], mo=True)
+            cmds.scaleConstraint(Items[i], Items[i + Half], mo=True)
