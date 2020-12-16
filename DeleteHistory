@@ -1,0 +1,7 @@
+import maya.cmds as cmds
+
+class History:
+
+    def deleteHistory(self):
+        cmds.delete(all=True, ch=True)
+        print("History Deleted")
