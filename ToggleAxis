@@ -1,0 +1,16 @@
+import maya.cmds as cmds
+
+class ToggleAxis:
+
+    def toggleOn(self):
+        Items = cmds.ls(selection=True)
+        for i in range(len(Items)):
+            if not cmds.toggleAxis(Items[i], q=True, o=True):
+                cmds.setAttr(Items[i] + ".displayLocalAxis", True)
+
+
+    def toggleOff(self):
+        Items = cmds.ls(selection=True)
+        for i in range(len(Items)):
+            if not cmds.toggleAxis(Items[i], q=True, o=False):
+                cmds.setAttr(Items[i] + ".displayLocalAxis", False)
