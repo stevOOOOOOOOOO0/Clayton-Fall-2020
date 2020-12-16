@@ -1,0 +1,10 @@
+import maya.cmds as cmds
+
+class Group:
+
+    def createGroup(self):
+        Items = cmds.ls(selection=True)
+        for i in range(len(Items)):
+            temp = cmds.group(empty=True)
+            cmds.matchTransform(temp, Items[i], pos=True, rot=True, scl=True)
+            cmds.parent(Items[i], temp)
