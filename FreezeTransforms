@@ -1,0 +1,6 @@
+import maya.cmds as cmds
+
+class FreezeTransforms:
+
+    def freeze(self):
+        cmds.makeIdentity(apply=True)
